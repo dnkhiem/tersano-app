@@ -9,5 +9,6 @@ var auth_1 = __importDefault(require("../middleware/auth"));
 var router = (0, express_1.Router)();
 router.get('/', auth_1.default, productController_1.getProducts);
 router.post('/', auth_1.default, productController_1.addProduct);
+router.put('/:id', auth_1.default, productController_1.updateProduct); // Add this line
 router.delete('/:id', auth_1.default, productController_1.deleteProduct);
 exports.default = router;

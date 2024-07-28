@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProduct = exports.addProduct = exports.getProducts = void 0;
+exports.deleteProduct = exports.updateProduct = exports.addProduct = exports.getProducts = void 0;
 var typeorm_1 = require("typeorm");
 var Product_1 = require("../entities/Product");
 var getProducts = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -71,14 +71,44 @@ var addProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.addProduct = addProduct;
+var updateProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, name, price, description, productRepository, product;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = req.body, name = _a.name, price = _a.price, description = _a.description;
+                productRepository = (0, typeorm_1.getRepository)(Product_1.Product);
+                return [4 /*yield*/, productRepository.findOne({ where: { id: parseInt(req.params.id), user: req.user } })];
+            case 1:
+                product = _b.sent();
+                if (!product)
+                    return [2 /*return*/, res.status(404).send('Product not found')];
+                product.name = name;
+                product.price = price;
+                product.description = description;
+                return [4 /*yield*/, productRepository.save(product)];
+            case 2:
+                _b.sent();
+                res.json(product);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.updateProduct = updateProduct;
 var deleteProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var productRepository;
+    var productRepository, product;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 productRepository = (0, typeorm_1.getRepository)(Product_1.Product);
-                return [4 /*yield*/, productRepository.delete(req.params.id)];
+                return [4 /*yield*/, productRepository.findOne({ where: { id: parseInt(req.params.id) } })];
             case 1:
+                product = _a.sent();
+                if (!product)
+                    return [2 /*return*/, res.status(404).send('Product not found')];
+                product.deletedAt = new Date();
+                return [4 /*yield*/, productRepository.save(product)];
+            case 2:
                 _a.sent();
                 res.send('Product deleted');
                 return [2 /*return*/];

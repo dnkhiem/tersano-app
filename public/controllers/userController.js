@@ -75,12 +75,12 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
             case 1:
                 user = _b.sent();
                 if (!user)
-                    return [2 /*return*/, res.status(400).send('Invalid credentials')];
+                    return [2 /*return*/, res.status(400).send({ error: 'Invalid username or password' })];
                 return [4 /*yield*/, bcryptjs_1.default.compare(password, user.password)];
             case 2:
                 isMatch = _b.sent();
                 if (!isMatch)
-                    return [2 /*return*/, res.status(400).send('Invalid credentials')];
+                    return [2 /*return*/, res.status(400).send({ error: 'Invalid username or password' })];
                 token = jsonwebtoken_1.default.sign({ userId: user.id }, 'your_jwt_secret', { expiresIn: '1h' });
                 res.json({ token: token });
                 return [2 /*return*/];
