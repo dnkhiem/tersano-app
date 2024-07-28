@@ -2,7 +2,7 @@
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "outDir": "./public",
+    "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
