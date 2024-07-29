@@ -1,7 +1,7 @@
 {
   "name": "tersano-app",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "dev": "npx ts-node-dev src/app.ts",
     "build": "npx tsc",
